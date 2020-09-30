@@ -117,12 +117,15 @@
                 const width = 500;
                 const height = 500;
                 const padding = 1;
-
+                
                 d3.csv('buildings.csv', d3.autoType)
                 .then(data=>{
-
+                    
                     console.log('buildings', data);
                     buildings = data;
+                    buildings.sort(function (a,b){
+                        return b.height_px - a.height_px;
+                    });
                     const ext = d3.extent(buildings, d=>d.height_px);
                     console.log(ext)
 
@@ -159,8 +162,6 @@
                         .attr('y', (d,i) => (i* (width)/buildings.length) + 20)
                         .attr('width', (d,i) => d.height_px)
                         .attr('height', 20)
-
-
 
                         svg.selectAll("text.labels")
                             .data(buildings)
